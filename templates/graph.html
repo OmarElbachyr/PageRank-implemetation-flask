@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <div class="container" id="container">
+        <div>
+            <input id="inputs-number" type="number">
+            <button id="button" type="button" onclick="produceInputs()">Click me</button>
+            <button id="remove-inputs" type="button" onclick="removeInputs()">Remove</button>
+        </div>
+
+        <div class="inputs-div">
+
+        </div>
+
+
+        <script>
+            function produceInputs() {
+                removeInputs()
+                const input = document.getElementById('inputs-number');
+
+                let inputsNumber = input.value;
+                console.log(inputsNumber)
+
+                for (let i = 1; i <= inputsNumber; i++) {
+                    let page = document.createElement('label')
+                    let e = document.createElement('input');
+                    //document.getElementById('container').appendChild(e)
+                    document.getElementsByClassName('inputs-div')[0].appendChild(page).innerText = i;
+                    document.getElementsByClassName('inputs-div')[0].appendChild(e)
+                    document.getElementsByClassName('inputs-div')[0].appendChild(document.createElement('br'))
+                }
+            }
+
+            function removeInputs() {
+                const inputs = document.querySelector('.inputs-div').childNodes
+                const inputsDiv = document.getElementsByClassName('inputs-div')[0]
+
+                console.log(inputs.length)
+
+                for (let i = inputs.length - 1; i > 0; i--) {
+                    let item = inputs[i];
+                    item.remove()
+                }
+
+            }
+        </script>
+    </div>
+ {% endblock content %}

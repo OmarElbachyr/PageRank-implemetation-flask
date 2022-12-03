@@ -2,6 +2,7 @@ from flask import Flask, request, render_template, url_for
 from flask_cors import CORS, cross_origin
 import pandas as pd
 import os
+import xml.dom.minidom
 from static.py.PageRank import PageRank
 
 UPLOAD_FOLDER = './static/files'
@@ -33,10 +34,9 @@ def page_rank(method):  # put application's code here
             TP = df_TP.to_numpy()
             result = PageRank_obg.PageRank_TP(TP)
             # print(f'type: {type(result)}')
-
             ranks = [*range(1, result.shape[0] + 1)]
 
-            return render_template('./result.html', ranks=ranks, scores=result, zip=zip)
+            return render_template('./result.html', ranks=ranks, scores=result, zip=zip, header='Result')
 
         elif method == 'adjacency-matrix':
             file = request.files['graph_am']
@@ -45,10 +45,25 @@ def page_rank(method):  # put application's code here
             df_A = pd.read_excel('./static/files/adjacency-matrix.xlsx', header=None)
             A = df_A.to_numpy()
             result = PageRank_obg.PageRank_adjacency_matrix(A)
+            ranks = [*range(1, result.shape[0] + 1)]
 
-            return str(result)
+            return render_template('./result.html', ranks=ranks, scores=result, zip=zip, header='Result')
 
-    # return render_template('./index.html')
+        elif method == 'graphMl':
+            file = request.files['graphMl']
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], 'graphMl.xml'))
+            print('File Saved!')
+            graph = xml.dom.minidom.parse("./static/files/graphMl.xml")
+
+            result = PageRank_obg.PageRank_graphMl(graph)
+            ranks = [*range(1, result.shape[0] + 1)]
+
+            return render_template('./result.html', ranks=ranks, scores=result, zip=zip, header='Result')
+
+@app.route('/draw-graph', methods=['GET'])
+def draw_graph():
+    return render_template('./graph.html')
+
 
 
 if __name__ == '__main__':

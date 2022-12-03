@@ -23,6 +23,29 @@ label {
 input + button {
     margin-top: 10px;
 }
-.tp-div, .am-div {
+
+label {
+    margin-right: 10px;
+}
+
+label {
+    margin-top: 10px;
+}
+
+.tp-div, .am-div, .graphMl-div {
     margin: 1em;
+}
+
+.inputs-div {
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*display: grid;*/
+    /*grid-template-columns: 1fr 1fr;*/
+
+    /*grid-template-columns: 100px 50px 100px;*/
+    /*grid-template-rows: 80px auto 80px;*/
+    /*column-gap: 10px;*/
+    /*row-gap: 15px;*/
+    /*justify-items: center;*/
+
 }
