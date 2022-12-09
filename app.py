@@ -64,15 +64,16 @@ def page_rank(method):  # put application's code here
             sources = list()
             values = request.values
             print(values)
-            # for i in len(values):
-            #     values[f'sources-{i}']
+
             result = PageRank_obg.PageRank_networkx(values)
-            return str(result)
+            ranks = [*range(1, result.shape[0] + 1)]
+
+            return render_template('./result.html', ranks=ranks, scores=result, zip=zip, header='Result')
+
 
 @app.route('/draw-graph', methods=['GET'])
 def draw_graph():
     return render_template('./graph.html')
-
 
 
 if __name__ == '__main__':

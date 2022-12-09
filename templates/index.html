@@ -27,7 +27,7 @@
             </form>
         </div>
         <div class="graphMl-div">
-            <form class="form-2" method="post" enctype="multipart/form-data" action="http://127.0.0.1:5000/PageRank/graphMl">
+            <form class="form-3" method="post" enctype="multipart/form-data" action="http://127.0.0.1:5000/PageRank/graphMl">
                 <label for="formFileLg" class="form-label">Import the graphMl file</label>
                 <input class="form-control" type="file" id="formFile" name="graphMl">
                 <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-2">
@@ -37,6 +37,26 @@
 
             </form>
         </div>
+
+        <div class="networkx-div">
+            <label for="formFileLg" class="form-label">Insert the graph</label>
+
+            <div class="global-div">
+                <div class="buttons-div">
+                    <input id="inputs-number" type="number" min="0" />
+                    <button id="button" class="btn btn-success btn-sm m-1" type="button" onclick="produceInputs()">Add</button>
+                    <button id="remove-inputs" class="btn btn-danger btn-sm m-1" type="button" onclick="removeInputs()">Remove</button>
+                </div>
+
+                <div class="inputs-div">
+                    <form method="post" action="http://127.0.0.1:5000/PageRank/networkx">
+                        <ul id="wrapper"></ul>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
 
     </div>
 

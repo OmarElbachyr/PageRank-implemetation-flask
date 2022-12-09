@@ -3,81 +3,42 @@
 {% block content %}
 
     <div class="container" id="container">
+
         <div class="global-div">
             <div class="buttons-div">
-            <input id="inputs-number" type="number" min="0">
-            <button id="button" type="button" onclick="produceInputs()">Click me</button>
-            <button id="remove-inputs" type="button" onclick="removeInputs()">Remove</button>
+                <input id="inputs-number" type="number" min="0">
+                <button id="button" class="btn btn-success btn-sm m-1" type="button" onclick="produceInputs()">Add</button>
+                <button id="remove-inputs" class="btn btn-danger btn-sm m-1" type="button" onclick="removeInputs()">Remove</button>
+            </div>
+
+            <div class="inputs-div">
+                <form method="post" action="http://127.0.0.1:5000/PageRank/networkx">
+                    <ul id="wrapper">
+
+                    </ul>
+                </form>
+
+            </div>
         </div>
 
-        <div class="inputs-div">
-            <form method="post" action="http://127.0.0.1:5000/PageRank/networkx">
-                <ul id="wrapper">
-
-                </ul>
-            </form>
-        </div>
-        </div>
 
 
-        <script>
-            function produceInputs() {
-                removeInputs()
-                const input = document.getElementById('inputs-number');
-                let inputsNumber = input.value;
-                console.log(inputsNumber)
-                if (inputsNumber > 0) {
+    <div class="input-group mb-3">
+  <span class="input-group-text">2</span>
+  <input type="text" class="form-control" placeholder="osos">
+</div>
 
-                    for (let i = 1; i <= inputsNumber; i++) {
-                        let li = document.createElement('li');
-                        let page = document.createElement('label');
-                        let input = document.createElement('input');
+    <div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">3</span>
+  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+</div>
 
-                        input.setAttribute('type', 'text');
-                        input.setAttribute('name', 'sources-' + i);
-                        {#inputDiv.setAttribute('class', 'input-div')#}
-                        li.appendChild(page).innerText = i;
-                        li.appendChild(input);
+    <div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">4</span>
+  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+</div>
 
 
-                        document.getElementById('wrapper').appendChild(li);
-                        //document.getElementById('container').appendChild(e)
-                        {#document.getElementsByClassName('inputs-div')[0].appendChild(page).innerText = i;#}
 
-                        {#document.getElementsByClassName('inputs-div')[0].appendChild(document.createElement('br'))#}
-                    }
-
-                    let li = document.createElement('li');
-                    let button = document.createElement('button');
-
-                    button.setAttribute('type', 'submit');
-                    li.appendChild(button).innerText = 'Get';
-
-
-                    document.getElementById('wrapper').appendChild(li)
-                }
-                else if (inputsNumber == 0) {
-                    alert('Please enter a number!')
-                }
-                else {
-                    alert('Enter positive numbers only!')
-                }
-
-            }
-
-            function removeInputs() {
-                {#const inputs = document.querySelector('.inputs-div').childNodes#}
-                const inputs = document.getElementById('wrapper').childNodes;
-                const inputsDiv = document.getElementsByClassName('inputs-div')[0];
-
-                console.log(inputs.length);
-
-                for (let i = inputs.length - 1; i > 0; i--) {
-                    let item = inputs[i];
-                    item.remove();
-                }
-
-            }
-        </script>
     </div>
  {% endblock content %}

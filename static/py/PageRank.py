@@ -2,6 +2,7 @@ import numpy as np
 from numpy.linalg import norm
 from more_itertools import locate
 import networkx as nx
+import matplotlib.pyplot as plt
 from werkzeug.datastructures import MultiDict
 
 
@@ -32,7 +33,6 @@ class PageRank:
                 Pi = 1 / N * np.ones(N)
                 P.append(Pi)
 
-        # print(P)
         R_final = PageRank.PageRank_TP(self, P, e=e, lamb=lamb)
 
         return np.round_(R_final, 4)
@@ -44,8 +44,6 @@ class PageRank:
 
         print(f'{nodes.length} nodes')
         print(f'{edges.length} links')
-        # for node in nodes:
-        #     print(node.getAttribute('id'))
 
         sources = list()
         targets = list()
@@ -54,12 +52,12 @@ class PageRank:
             sources.append(int(source))
             target = edge.getAttribute('target')
             targets.append(int(target))
-            # print(f'source: {source}, targets: {target}')
+
 
         unique_sources = np.unique(sources)
         AM = list()
         for i in range(1, nodes.length + 1):
-            # print(i)
+
             if i in unique_sources:
                 row = np.zeros(nodes.length, dtype=int).tolist()
                 indices = locate(sources, lambda x: x == i)
@@ -68,7 +66,6 @@ class PageRank:
                 for i in indices:
                     row[targets[i] - 1] = 1
 
-                # print(row)
                 AM.append(row)
             else:
                 AM.append(np.zeros(nodes.length, dtype=int).tolist())
@@ -80,7 +77,6 @@ class PageRank:
     def PageRank_networkx(self, graph, e=10e-6, lamb=0.85):
         print('Graph Object')
 
-
         sources = list()
         targets = list()
         for i in range(1, len(graph) + 1):
@@ -88,24 +84,32 @@ class PageRank:
             targets_i = targets_i.split('-')
             targets += targets_i
             num_targets_i = len(targets_i)
-            # print(num_targets_i)
+
             sources_i = (i * np.ones(num_targets_i, dtype=int)).tolist()
             sources += sources_i
-            print(sources_i)
-            print(targets_i)
 
-        targets = [eval(x) for x in targets]
-        # sources, targets
+
+        targets = [eval(x) if x != '' else 0 for x in targets]
+        print(f'source {sources}\ntargets {targets}')
 
         G = nx.DiGraph()
-
-        G.add_nodes_from(targets)
+        # print(f'unique {np.unique(sources)}')
+        G.add_nodes_from(np.unique(sources))
 
         for i, j in zip(sources, targets):
-            G.add_edge(i, j)
+            if j != 0:
+                G.add_edge(i, j)
 
         AM = nx.adjacency_matrix(G).todense()
+        AM = np.array(AM)
         print(AM)
         R_final = PageRank.PageRank_adjacency_matrix(self, AM, e=e, lamb=lamb)
-        # #
+
+        print(f'R_final {R_final}')
+        PageRank.draw_graph(self, G)
         return np.round_(R_final, 4)
+
+
+    def draw_graph(self, graph):
+        nx.draw_circular(graph, with_labels=True, node_size=1000, font_size=10)
+        plt.savefig("./static/images/graph.png", format="png")
