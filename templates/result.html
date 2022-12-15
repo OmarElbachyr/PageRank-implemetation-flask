@@ -37,10 +37,18 @@
                                 <td>{{ score }}</td>
                             {% endfor %}
                             </tr>
+
                         </tbody>
                     </div>
             </table>
+
         </div>
+        {% if method == 'networkx' or method == 'adjacency-matrix' or method == 'graphMl' %}
+            <img src="{{ url_for('static', filename='images/graph.png') }}"
+                            width="1000"
+                            />
+        {% endif %}
+
     </div>
 
 {% endblock content%}

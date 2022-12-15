@@ -47,7 +47,8 @@ def page_rank(method):  # put application's code here
             result = PageRank_obg.PageRank_adjacency_matrix(A)
             ranks = [*range(1, result.shape[0] + 1)]
 
-            return render_template('./result.html', ranks=ranks, scores=result, zip=zip, header='Result')
+            return render_template('./result.html', ranks=ranks, scores=result, zip=zip, header='Result',
+                                   method='adjacency-matrix')
 
         elif method == 'graphMl':
             file = request.files['graphMl']
@@ -58,7 +59,8 @@ def page_rank(method):  # put application's code here
             result = PageRank_obg.PageRank_graphMl(graph)
             ranks = [*range(1, result.shape[0] + 1)]
 
-            return render_template('./result.html', ranks=ranks, scores=result, zip=zip, header='Result')
+            return render_template('./result.html', ranks=ranks, scores=result, zip=zip, header='Result',
+                                   method='graphMl')
 
         elif method == 'networkx':
             sources = list()
@@ -68,7 +70,8 @@ def page_rank(method):  # put application's code here
             result = PageRank_obg.PageRank_networkx(values)
             ranks = [*range(1, result.shape[0] + 1)]
 
-            return render_template('./result.html', ranks=ranks, scores=result, zip=zip, header='Result')
+            return render_template('./result.html', ranks=ranks, scores=result, zip=zip, header='Result',
+                                   method='networkx')
 
 
 @app.route('/draw-graph', methods=['GET'])
